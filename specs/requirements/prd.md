@@ -2,11 +2,13 @@
 
 ## Problem Statement
 
-Employees who pay for business expenses out of pocket today have no consistent
-way to request reimbursement: claims travel as emails, spreadsheets or paper
-receipts, managers approve them informally, and finance has to manually
-reassemble everything that was approved before it can be paid out through
+Employees who pay for business expenses out of pocket today have no consistent  
+way to request reimbursement: claims travel as emails, spreadsheets or paper  
+receipts, managers approve them informally, and finance has to manually  
+reassemble everything that was approved before it can be paid out through  
 payroll. This is slow, easy to lose track of, and gives finance no reliable,
+
+  
 auditable record of what was approved and what still needs to be paid.
 
 ## Solution
