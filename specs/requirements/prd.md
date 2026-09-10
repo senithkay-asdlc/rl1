@@ -28,22 +28,22 @@ them for payroll processing.
 ## User Stories
 
 1. As an employee, I want to submit an expense claim with an amount, category,
- date, and receipt, so that I can request reimbursement for a business
- expense.
+date, and receipt, so that I can request reimbursement for a business
+expense.
 2. As an employee, I want to see the status of every claim I've submitted, so
- that I know whether it's pending, approved, or rejected.
+that I know whether it's pending, approved, or rejected.
 3. As an employee, I want to edit a rejected claim and resubmit it, so that I
- can correct whatever the manager flagged without starting over.
+can correct whatever the manager flagged without starting over.
 4. As a manager, I want to see the pending expense claims submitted by my
- direct reports, so that I know what's waiting on my review.
+direct reports, so that I know what's waiting on my review.
 5. As a manager, I want to approve or reject a claim, so that valid expenses
- move toward payment and invalid ones go back to the employee.
+move toward payment and invalid ones go back to the employee.
 6. As finance, I want to see every approved claim that hasn't been exported
- yet, so that I know what's ready to go to payroll.
+yet, so that I know what's ready to go to payroll.
 7. As finance, I want to export a batch of approved claims to a downloadable
- file, so that I can upload it into our payroll system.
+file, so that I can upload it into our payroll system.
 8. As finance, I want claims to be marked as exported once they're in a
- payroll batch, so that the same claim is never paid out twice.
+payroll batch, so that the same claim is never paid out twice.
 
 ## Product Decisions
 
@@ -57,12 +57,12 @@ claim, which sends it back through approval.
 upload into whatever payroll system the organization uses; there is no live
 integration with a specific payroll vendor.
 - Every employee has exactly one assigned manager, maintained in an
-admin-managed employee directory; claim routing reads this assignment. *assumed*
+admin-managed employee directory; claim routing reads this assignment.
 - Expense categories come from a predefined list (e.g. Travel, Meals, Lodging,
-Other) that finance maintains, rather than free text. *assumed*
-- A receipt attachment is required on every claim submission. *assumed*
+Other) that finance maintains, rather than free text.
+- A receipt attachment is required on every claim submission.
 - Employees and managers receive an email notification when a claim's status
-changes (submitted, approved, rejected). *assumed*
+changes (submitted, approved, rejected).
 - All claims are recorded in a single organizational currency; multi-currency
 claims are not supported. *assumed*
 
@@ -77,9 +77,9 @@ claims are not supported. *assumed*
 ## Open Questions
 
 1. What columns/format does the payroll export file need to match the
- organization's actual payroll system's import requirements?
+organization's actual payroll system's import requirements?
 2. Is there a per-category spending limit or policy (e.g. a cap on meal
- expenses) that should block or flag a claim at submission time?
+expenses) that should block or flag a claim at submission time?
 
 ## Further Notes
 
