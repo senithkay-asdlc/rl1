@@ -8,7 +8,6 @@ receipts, managers approve them informally, and finance has to manually
 reassemble everything that was approved before it can be paid out through  
 payroll. This is slow, easy to lose track of, and gives finance no reliable,
 
-  
 auditable record of what was approved and what still needs to be paid.
 
 ## Solution
