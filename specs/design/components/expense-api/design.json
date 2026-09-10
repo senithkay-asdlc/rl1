@@ -1,0 +1,27 @@
+{
+  "name": "expense-api",
+  "type": "service",
+  "version": "0.1.0",
+  "language": "Ballerina",
+  "buildpack": "docker",
+  "appPath": "expense-api",
+  "entrypoint": "deployment/service",
+  "exposure": "intranet",
+  "dependencies": [
+    { "kind": "platform-resource", "name": "expense-db", "resourceType": "postgres-cnpg", "parameters": { "instances": 1, "storage": "1Gi", "version": "16" } },
+    { "kind": "platform-resource", "name": "thunder-auth", "resourceType": "thunder-app" },
+    {
+      "kind": "external",
+      "name": "email-provider",
+      "description": "Transactional email delivery — sends status-change notifications to employees and managers on submit/approve/reject.",
+      "candidates": [
+        { "name": "sendgrid", "style": "rest-api" },
+        { "name": "postmark", "style": "rest-api" },
+        { "name": "amazon-ses", "style": "sdk", "package": "npm:@aws-sdk/client-sesv2" }
+      ]
+    }
+  ],
+  "description": "Owns expense claims, approvals, and payroll export batches. Exposes REST endpoints to create and update claims, list claims by role (employee/manager/finance), record manager decisions, and generate a CSV export of approved, not-yet-exported claims. Sends email notifications on status change via the email provider. Does not issue payroll payments or integrate with a specific payroll vendor — it only produces the downloadable export file.",
+  "stories": [1, 2, 3, 4, 5, 6, 7, 8],
+  "skillsPinned": ["openapi-conventions", "ballerina", "api-management", "thunder-authentication"]
+}
