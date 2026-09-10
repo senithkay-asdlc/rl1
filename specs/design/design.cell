@@ -5,7 +5,7 @@ component expense-api as "Expense API" service
 component expense-db as "Expense Database" database
 
 east thunder-auth as "Thunder Auth" identity-server
-south email-provider as "Email Provider" service
+south sendgrid as "SendGrid" service
 
 north -> expense-webapp
 
@@ -13,4 +13,4 @@ expense-webapp -> expense-api
 expense-webapp -> thunder-auth
 expense-api -> thunder-auth
 expense-api -> expense-db
-expense-api -> email-provider
+expense-api -> sendgrid
