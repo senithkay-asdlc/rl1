@@ -7,22 +7,85 @@
   "appPath": "expense-api",
   "entrypoint": "deployment/service",
   "exposure": "intranet",
+  "stories": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "description": "Owns expense claims, approvals, and payroll export batches. Exposes REST endpoints to create and update claims, list claims by role (employee/manager/finance), record manager decisions, and generate a CSV export of approved, not-yet-exported claims. Sends email notifications on status change via the email provider. Does not issue payroll payments or integrate with a specific payroll vendor — it only produces the downloadable export file.",
   "dependencies": [
-    { "kind": "platform-resource", "name": "expense-db", "resourceType": "postgres-cnpg", "parameters": { "instances": 1, "storage": "1Gi", "version": "16" } },
-    { "kind": "platform-resource", "name": "thunder-auth", "resourceType": "thunder-app" },
+    {
+      "kind": "platform-resource",
+      "name": "expense-db",
+      "resourceType": "postgres-cnpg",
+      "parameters": {
+        "instances": 1,
+        "storage": "1Gi",
+        "version": "16"
+      },
+      "wiring": {
+        "ref": "rl1-expense-db",
+        "envBindings": {
+          "dbname": "EXPENSE_DB_DBNAME",
+          "host": "EXPENSE_DB_HOST",
+          "password": "EXPENSE_DB_PASSWORD",
+          "port": "EXPENSE_DB_PORT",
+          "user": "EXPENSE_DB_USER"
+        }
+      }
+    },
+    {
+      "kind": "platform-resource",
+      "name": "thunder-auth",
+      "resourceType": "thunder-app",
+      "wiring": {
+        "ref": "rl1-thunder-auth",
+        "envBindings": {
+          "client_id": "THUNDER_AUTH_CLIENT_ID",
+          "issuer": "THUNDER_AUTH_ISSUER",
+          "jwks_url": "THUNDER_AUTH_JWKS_URL",
+          "scopes": "THUNDER_AUTH_SCOPES"
+        }
+      }
+    },
     {
       "kind": "external",
       "name": "sendgrid",
+      "description": "Transactional email delivery via SendGrid's v3 Mail Send API — sends status-change notifications to employees and managers on submit/approve/reject.",
       "style": "rest-api",
       "specPath": "https://raw.githubusercontent.com/twilio/sendgrid-oai/main/spec/json/tsg_mail_v3.json",
       "config": [
-        { "key": "SENDGRID_API_KEY", "secret": true, "description": "SendGrid API key used as the bearer token for the Mail Send API" },
-        { "key": "SENDGRID_FROM_EMAIL", "description": "Verified sender email address notifications are sent from" }
+        {
+          "key": "SENDGRID_API_KEY",
+          "secret": true,
+          "description": "SendGrid API key used as the bearer token for the Mail Send API"
+        },
+        {
+          "key": "SENDGRID_FROM_EMAIL",
+          "description": "Verified sender email address notifications are sent from"
+        }
       ],
-      "description": "Transactional email delivery via SendGrid's v3 Mail Send API — sends status-change notifications to employees and managers on submit/approve/reject."
+      "wiring": {
+        "ref": "rl1-sendgrid",
+        "envBindings": {
+          "SENDGRID_API_KEY": "SENDGRID_API_KEY",
+          "SENDGRID_FROM_EMAIL": "SENDGRID_FROM_EMAIL"
+        }
+      }
     }
   ],
-  "description": "Owns expense claims, approvals, and payroll export batches. Exposes REST endpoints to create and update claims, list claims by role (employee/manager/finance), record manager decisions, and generate a CSV export of approved, not-yet-exported claims. Sends email notifications on status change via the email provider. Does not issue payroll payments or integrate with a specific payroll vendor — it only produces the downloadable export file.",
-  "stories": [1, 2, 3, 4, 5, 6, 7, 8],
-  "skillsPinned": ["openapi-conventions", "ballerina", "api-management", "thunder-authentication"]
+  "exposesAPI": {
+    "auth": "end-user-required"
+  },
+  "skillsPinned": [
+    "openapi-conventions",
+    "ballerina",
+    "api-management",
+    "thunder-authentication"
+  ]
 }
